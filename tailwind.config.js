@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         primary: "#7D032C", // Custom primary color
         secondary: "#F5F4EF", // Custom secondary color
-        accent: "#38b2ac", // Custom accent color
+        accent: "#2B4C54", // Custom accent color
       },
       backgroundColor: {
         "primary-bg": "#7D032C", // Custom background for primary

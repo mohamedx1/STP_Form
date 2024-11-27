@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Trophy, UsersRound } from "lucide-react";
 import bar from "./assets/par.png";
 import logo from "./assets/LOGO.png";
 import years from "./assets/year.svg";
+import vector from "./assets/Vector.png";
+import workshops from "./assets/workshop.png";
 import "./App.css";
 function App() {
   const [formData, setFormData] = useState({
@@ -21,7 +22,70 @@ function App() {
     comment: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
+  const validateForm = (data) => {
+    const validationErrors = {};
+
+    if (!data.fullName.trim()) {
+      validationErrors.fullName = "Full name is required.";
+    }
+
+    if (!data.email || !/\S+@\S+\.\S+/.test(data.email)) {
+      validationErrors.email = "A valid email is required.";
+    }
+
+    if (!data.phoneNumber || !/^\d{11,12}$/.test(data.phoneNumber)) {
+      validationErrors.phoneNumber = "Phone number must be 11 to 12 digits.";
+    }
+
+    if (!data.nationalId || !/^\d{14}$/.test(data.nationalId)) {
+      validationErrors.nationalId = "National ID must be exactly 14 digits.";
+    }
+
+    if (!data.college.trim()) {
+      validationErrors.college = "College is required.";
+    }
+
+    if (!data.major.trim()) {
+      validationErrors.major = "Major is required.";
+    }
+
+    if (
+      !data.graduationYear ||
+      !/^\d{4}$/.test(data.graduationYear) ||
+      parseInt(data.graduationYear) < 1900
+    ) {
+      validationErrors.graduationYear = "Graduation year is invalid.";
+    }
+
+    if (!["competition", "workshops"].includes(data.participation)) {
+      validationErrors.participation =
+        "Participation must be either 'competition' or 'workshops'.";
+    }
+
+    if (data.participation === "workshops") {
+      if (!data.firstPreference) {
+        validationErrors.firstPreference = "First preference is required.";
+      }
+
+      if (!data.secondPreference) {
+        validationErrors.secondPreference = "Second preference is required.";
+      } else if (data.secondPreference === data.firstPreference) {
+        validationErrors.secondPreference =
+          "First and second preferences must be different.";
+      }
+    }
+
+    if (data.participation === "competition" && !data.competitionChoice) {
+      validationErrors.competitionChoice = "Competition choice is required.";
+    }
+
+    if (!data.reason.trim()) {
+      validationErrors.reason = "Reason is required.";
+    }
+
+    return validationErrors;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,90 +95,75 @@ function App() {
     }));
   };
 
-  const validateForm = () => {
-    let newErrors = {};
-    if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Valid email is required";
-    if (!formData.phoneNumber)
-      newErrors.phoneNumber = "Phone number is required";
-    if (!formData.nationalId) newErrors.nationalId = "National ID is required";
-    if (!formData.college) newErrors.college = "College is required";
-    if (!formData.major) newErrors.major = "Major is required";
-    if (!formData.graduationYear)
-      newErrors.graduationYear = "Graduation year is required";
-    if (!formData.participation)
-      newErrors.participation = "Participation type is required";
-    if (formData.participation === "workshops") {
-      if (!formData.firstPreference)
-        newErrors.firstPreference = "First preference is required";
-      if (!formData.secondPreference)
-        newErrors.secondPreference = "Second preference is required";
-    }
-    if (formData.participation === "competition") {
-      if (!formData.competitionChoice)
-        newErrors.competitionChoice = "Competition selection is required";
-    }
-    if (!formData.reason)
-      newErrors.reason = "Reason for participation is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
       try {
-        // Prepare the data you want to send to the backend
         const response = await fetch("https://stp-org.software/api/users", {
-          method: "POST", // or 'PUT' if you're updating data
+          method: "POST",
           headers: {
-            "Content-Type": "application/json", // Make sure to set the Content-Type to JSON
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData), // Convert the formData object to JSON
+          body: JSON.stringify(formData),
         });
 
         if (response.ok) {
-          // Handle success, e.g., alert the user or redirect
-          alert("Form submitted successfully!");
-          console.log("Form data:", formData);
+          console.log("Form submitted successfully", formData);
+          setFormData({
+            fullName: "",
+            email: "",
+            phoneNumber: "",
+            nationalId: "",
+            college: "",
+            major: "",
+            graduationYear: "",
+            participation: "",
+            firstPreference: "",
+            secondPreference: "",
+            competitionChoice: "",
+            reason: "",
+            comment: "",
+          });
         } else {
-          // Handle server errors or other issues
-          alert("Failed to submit form. Please try again.");
+          const result = await response.json();
+          console.error("Error submitting form:", result.errors);
+          setErrors({
+            submission: "National ID, phone number or email is already used.",
+          });
         }
       } catch (error) {
-        // Handle network or unexpected errors
         console.error("Error submitting form:", error);
-        alert("An error occurred while submitting the form.");
+        setErrors({
+          submission: "National ID, phone number or email is already used..",
+        });
       }
     } else {
-      console.log("Form has errors");
+      console.log("Validation failed", validationErrors);
     }
   };
 
   return (
     <div className='bg-primary'>
-      <div className='h-32 flex justify-between  w-1/2 mx-auto items-center '>
+      <div className='md:h-32 h-24 flex justify-between w-11/12   mx-auto items-center '>
         <figure>
-          <img src={logo} alt='logo' className='w-24 ' />
+          <img src={logo} alt='logo' className='md:w-24 w-14 ' />
         </figure>
         <figure>
-          <img src={years} alt='20years' className='w-32 ' />
+          <img src={years} alt='20years' className='md:w-32 w-20 ' />
         </figure>
       </div>
-      <div className='min-h-screen bg-primary py-6 flex flex-col justify-center sm:py-12 '>
-        <div className='relative py-3 sm:max-w-xl sm:mx-auto '>
-          <div className='relative px-4 py-10 bg-secondary mx-8 md:mx-0 shadow rounded-3xl sm:p-10'>
-            <header
-              className='absolute -top-12 -translate-x-24 md:block hidden '
-              style={{
-                width: "calc(100% + 8rem)",
-              }}
-            >
-              <figcaption>
-                <img src={bar} alt='bar' />
-              </figcaption>
-            </header>
+      <header className='  md:w-1/2 sm:w-11/12 mx-auto border-black border-8 rounded-xl  '>
+        <figure className='rounded-lg'>
+          <img src={bar} alt='bar ' className='rounded-lg' />
+        </figure>
+      </header>
+      <div className='min-h-screen bg-primary  flex flex-col justify-center '>
+        <div className='  sm:max-w-xl sm:mx-auto '>
+          <div className='px-4 py-10 bg-secondary mx-8 md:mx-0 shadow  sm:p-10'>
             <div className='max-w-md mx-auto'>
               <div className='flex items-center space-x-5'>
                 <div className='block pl-2 font-semibold text-xl self-start text-gray-700'>
@@ -137,11 +186,6 @@ function App() {
                       placeholder='Full Name'
                       required
                     />
-                    {errors.fullName && (
-                      <span className='text-red-500 text-sm'>
-                        {errors.fullName}
-                      </span>
-                    )}
                   </div>
                   <div className='flex flex-col'>
                     <label className='leading-loose'>Email*</label>
@@ -154,12 +198,10 @@ function App() {
                       placeholder='Email'
                       required
                     />
-                    {errors.email && (
-                      <span className='text-red-500 text-sm'>
-                        {errors.email}
-                      </span>
-                    )}
                   </div>
+                  {errors.email && (
+                    <p className='text-red-500 text-sm'>{errors.email}</p>
+                  )}
                   {/* -------------------------------------------------------------------------------------------------------------- */}
 
                   <div className='grid gap-4 md:grid-cols-2 grid-cols-1'>
@@ -175,9 +217,9 @@ function App() {
                         required
                       />
                       {errors.phoneNumber && (
-                        <span className='text-red-500 text-sm'>
+                        <p className='text-red-500 text-sm'>
                           {errors.phoneNumber}
-                        </span>
+                        </p>
                       )}
                     </div>
 
@@ -193,9 +235,9 @@ function App() {
                         required
                       />
                       {errors.nationalId && (
-                        <span className='text-red-500 text-sm'>
+                        <p className='text-red-500 text-sm'>
                           {errors.nationalId}
-                        </span>
+                        </p>
                       )}
                     </div>
 
@@ -210,11 +252,6 @@ function App() {
                         placeholder='College'
                         required
                       />
-                      {errors.college && (
-                        <span className='text-red-500 text-sm'>
-                          {errors.college}
-                        </span>
-                      )}
                     </div>
 
                     <div className='flex flex-col'>
@@ -228,11 +265,6 @@ function App() {
                         placeholder='Major'
                         required
                       />
-                      {errors.major && (
-                        <span className='text-red-500 text-sm'>
-                          {errors.major}
-                        </span>
-                      )}
                     </div>
                   </div>
 
@@ -246,90 +278,86 @@ function App() {
                       required
                     >
                       <option value=''>Select Year</option>
-                      {[...Array(10)].map((_, i) => (
+                      {[...Array(5)].map((_, i) => (
                         <option key={i} value={2024 + i}>
                           {2024 + i}
                         </option>
                       ))}
                     </select>
-                    {errors.graduationYear && (
-                      <span className='text-red-500 text-sm'>
-                        {errors.graduationYear}
-                      </span>
-                    )}
                   </div>
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col '>
                     <label className='leading-loose mb-2 text-gray-800 font-semibold'>
                       Want to Participate in:
                     </label>
-                    <div className='flex gap-4'>
-                      <label className='flex-1'>
-                        <input
-                          type='radio'
-                          name='participation'
-                          value='competition'
-                          checked={formData.participation === "competition"}
-                          onChange={handleChange}
-                          className='sr-only'
-                        />
-                        <div
-                          className={`flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                            formData.participation === "competition"
-                              ? "border-primary bg-primary bg-opacity-10"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                        >
-                          <Trophy
-                            className={` w-20 h-20 mb-2 text-primary   `}
+                    <div className='flex gap-8  mx-auto flex-wrap'>
+                      <div className='flex-1 '>
+                        <label className=' flex flex-col '>
+                          <input
+                            type='radio'
+                            name='participation'
+                            value='competition'
+                            checked={formData.participation === "competition"}
+                            onChange={handleChange}
+                            className='sr-only'
                           />
-                          <span
-                            className={`font-medium ${
+                          <div
+                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white ${
                               formData.participation === "competition"
-                                ? "text-primary"
-                                : ""
+                                ? " border-2 border-accent"
+                                : " "
                             }`}
+                          >
+                            <div className='w-12 h-12'>
+                              <img
+                                src={vector}
+                                alt='vector'
+                                className='w-12 h-12'
+                              />
+                            </div>
+                          </div>
+                          <span
+                            className={`font-medium inline-block mx-auto mt-2 text-primary `}
                           >
                             Competitions
                           </span>
-                        </div>
-                      </label>
-                      <label className='flex-1'>
-                        <input
-                          type='radio'
-                          name='participation'
-                          value='workshops'
-                          checked={formData.participation === "workshops"}
-                          onChange={handleChange}
-                          className='sr-only'
-                        />
-                        <div
-                          className={`flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                            formData.participation === "workshops"
-                              ? "border-primary bg-primary bg-opacity-10"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                        >
-                          <UsersRound
-                            className={` w-20 h-20 mb-2 text-primary   `}
+                        </label>
+                      </div>
+
+                      <div className='flex-1 '>
+                        <label className=' flex flex-col '>
+                          <input
+                            type='radio'
+                            name='participation'
+                            value='workshops'
+                            checked={formData.participation === "workshops"}
+                            onChange={handleChange}
+                            className='sr-only'
                           />
-                          <span
-                            className={`font-medium ${
+                          <div
+                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white ${
                               formData.participation === "workshops"
-                                ? "text-primary"
-                                : "text-gray-700"
+                                ? "border-2 border-accent"
+                                : ""
                             }`}
+                          >
+                            <div className='w-12 h-12'>
+                              <img
+                                src={workshops}
+                                alt='workshops'
+                                className='w-12 h-12'
+                              />
+                            </div>
+                          </div>
+                          <span
+                            className={`font-medium inline-block mx-auto mt-2 text-primary`}
                           >
                             Workshops
                           </span>
-                        </div>
-                      </label>
+                        </label>
+                      </div>
                     </div>
-                    {errors.participation && (
-                      <span className='text-red-500 text-sm mt-1'>
-                        {errors.participation}
-                      </span>
-                    )}
                   </div>
+
                   {formData.participation === "workshops" && (
                     <>
                       <div className='flex flex-col'>
@@ -353,11 +381,6 @@ function App() {
                           <option value='Graphic design'>Graphic design</option>
                           <option value='Montage'>Montage</option>
                         </select>
-                        {errors.firstPreference && (
-                          <span className='text-red-500 text-sm'>
-                            {errors.firstPreference}
-                          </span>
-                        )}
                       </div>
                       <div className='flex flex-col'>
                         <label className='leading-loose'>
@@ -381,9 +404,9 @@ function App() {
                           <option value='Montage'>Montage</option>
                         </select>
                         {errors.secondPreference && (
-                          <span className='text-red-500 text-sm'>
+                          <p className='text-red-500 text-sm'>
                             {errors.secondPreference}
-                          </span>
+                          </p>
                         )}
                       </div>
                     </>
@@ -404,11 +427,6 @@ function App() {
                         </option>
                         <option value='RoboQuest'>RoboQuest</option>
                       </select>
-                      {errors.competitionChoice && (
-                        <span className='text-red-500 text-sm'>
-                          {errors.competitionChoice}
-                        </span>
-                      )}
                     </div>
                   )}
                   <div className='flex flex-col'>
@@ -425,11 +443,6 @@ function App() {
                       placeholder='Your reason'
                       required
                     ></textarea>
-                    {errors.reason && (
-                      <span className='text-red-500 text-sm'>
-                        {errors.reason}
-                      </span>
-                    )}
                   </div>
                   <div className='flex flex-col'>
                     <label className='leading-loose'>
@@ -448,11 +461,16 @@ function App() {
                 <div className='pt-4 flex items-center space-x-4'>
                   <button
                     type='submit'
-                    className='bg-primary flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-[#6B0000] transition-colors'
+                    className='bg-primary flex justify-center items-center  text-white px-8 py-2 mx-auto rounded-md focus:outline-none hover:bg-[#6B0000] transition-colors'
                   >
                     Submit
                   </button>
                 </div>
+                {errors.submission && (
+                  <p className='text-red-500 text-lg text-center'>
+                    {errors.submission}
+                  </p>
+                )}
               </form>
             </div>
           </div>
