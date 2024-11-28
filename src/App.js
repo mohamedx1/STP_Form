@@ -22,7 +22,7 @@ function App() {
     comment: "",
   });
 
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({});
   const validateForm = (data) => {
     const validationErrors = {};
 
@@ -147,7 +147,7 @@ function App() {
   };
 
   return (
-    <div className='bg-primary'>
+    <div className='bg-primary font-bold'>
       <div className='md:h-32 h-24 flex justify-between w-11/12   mx-auto items-center '>
         <figure>
           <img src={logo} alt='logo' className='md:w-24 w-14 ' />
@@ -156,7 +156,7 @@ function App() {
           <img src={years} alt='20years' className='md:w-32 w-20 ' />
         </figure>
       </div>
-      <header className='  md:w-1/2 sm:w-11/12 mx-auto border-black border-8 rounded-xl  '>
+      <header className='  md:w-1/2 sm:w-11/12 mx-auto border-black border-4 rounded-xl  '>
         <figure className='rounded-lg'>
           <img src={bar} alt='bar ' className='rounded-lg' />
         </figure>
@@ -165,18 +165,14 @@ function App() {
         <div className='  sm:max-w-xl sm:mx-auto '>
           <div className='px-4 py-10 bg-secondary mx-8 md:mx-0 shadow  sm:p-10'>
             <div className='max-w-md mx-auto'>
-              <div className='flex items-center space-x-5'>
-                <div className='block pl-2 font-semibold text-xl self-start text-gray-700'>
-                  <h2 className='leading-relaxed'>Registration Form</h2>
-                </div>
-              </div>
+              <div className='flex items-center space-x-5'></div>
               <form
                 onSubmit={handleSubmit}
                 className='divide-y divide-gray-200'
               >
                 <div className='py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7'>
                   <div className='flex flex-col'>
-                    <label className='leading-loose'>Full Name*</label>
+                    <label className='leading-loose mb-4'>Full Name*</label>
                     <input
                       type='text'
                       name='fullName'
@@ -188,7 +184,7 @@ function App() {
                     />
                   </div>
                   <div className='flex flex-col'>
-                    <label className='leading-loose'>Email*</label>
+                    <label className='leading-loose mb-4'>Email*</label>
                     <input
                       type='email'
                       name='email'
@@ -206,7 +202,9 @@ function App() {
 
                   <div className='grid gap-4 md:grid-cols-2 grid-cols-1'>
                     <div className='flex flex-col'>
-                      <label className='leading-loose'>WhatsApp Number*</label>
+                      <label className='leading-loose mb-4'>
+                        WhatsApp Number*
+                      </label>
                       <input
                         type='tel'
                         name='phoneNumber'
@@ -224,7 +222,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose'>National ID*</label>
+                      <label className='leading-loose mb-4'>National ID*</label>
                       <input
                         type='text'
                         name='nationalId'
@@ -242,7 +240,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose'>College*</label>
+                      <label className='leading-loose mb-4'>College*</label>
                       <input
                         type='text'
                         name='college'
@@ -255,7 +253,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose'>Major*</label>
+                      <label className='leading-loose mb-4'>Major*</label>
                       <input
                         type='text'
                         name='major'
@@ -269,7 +267,9 @@ function App() {
                   </div>
 
                   <div className='flex flex-col'>
-                    <label className='leading-loose'>Graduation Year*</label>
+                    <label className='leading-loose mb-4'>
+                      Graduation Year*
+                    </label>
                     <select
                       name='graduationYear'
                       value={formData.graduationYear}
@@ -286,10 +286,10 @@ function App() {
                     </select>
                   </div>
                   <div className='flex flex-col '>
-                    <label className='leading-loose mb-2 text-gray-800 font-semibold'>
+                    <label className='leading-loose mb-2 mt-8 text-gray-800 font-semibold'>
                       Want to Participate in:
                     </label>
-                    <div className='flex gap-8  mx-auto flex-wrap'>
+                    <div className='flex gap-8 mx-auto flex-wrap w-2/3'>
                       <div className='flex-1 '>
                         <label className=' flex flex-col '>
                           <input
@@ -307,11 +307,11 @@ function App() {
                                 : " "
                             }`}
                           >
-                            <div className='w-12 h-12'>
+                            <div className='w-8  '>
                               <img
                                 src={vector}
                                 alt='vector'
-                                className='w-12 h-12'
+                                className='w-8 h-8'
                               />
                             </div>
                           </div>
@@ -340,11 +340,11 @@ function App() {
                                 : ""
                             }`}
                           >
-                            <div className='w-12 h-12'>
+                            <div className='w-8 '>
                               <img
                                 src={workshops}
                                 alt='workshops'
-                                className='w-12 h-12'
+                                className='w-8 h-8'
                               />
                             </div>
                           </div>
@@ -355,6 +355,11 @@ function App() {
                           </span>
                         </label>
                       </div>
+                      {errors.participation && (
+                        <p className='text-red-500 text-md'>
+                          {errors.participation}
+                        </p>
+                      )}
                     </div>
                   </div>
 
