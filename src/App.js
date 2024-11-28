@@ -178,7 +178,7 @@ function App() {
                       name='fullName'
                       value={formData.fullName}
                       onChange={handleChange}
-                      className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                      className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                       placeholder='Full Name'
                       required
                     />
@@ -190,7 +190,7 @@ function App() {
                       name='email'
                       value={formData.email}
                       onChange={handleChange}
-                      className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                      className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                       placeholder='Email'
                       required
                     />
@@ -210,7 +210,7 @@ function App() {
                         name='phoneNumber'
                         value={formData.phoneNumber}
                         onChange={handleChange}
-                        className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                        className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                         placeholder='WhatsApp Number'
                         required
                       />
@@ -228,7 +228,7 @@ function App() {
                         name='nationalId'
                         value={formData.nationalId}
                         onChange={handleChange}
-                        className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                        className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                         placeholder='National ID'
                         required
                       />
@@ -246,7 +246,7 @@ function App() {
                         name='college'
                         value={formData.college}
                         onChange={handleChange}
-                        className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                        className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                         placeholder='College'
                         required
                       />
@@ -259,7 +259,7 @@ function App() {
                         name='major'
                         value={formData.major}
                         onChange={handleChange}
-                        className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                        className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                         placeholder='Major'
                         required
                       />
@@ -274,7 +274,7 @@ function App() {
                       name='graduationYear'
                       value={formData.graduationYear}
                       onChange={handleChange}
-                      className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                      className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                       required
                     >
                       <option value=''>Select Year</option>
@@ -373,7 +373,7 @@ function App() {
                           name='firstPreference'
                           value={formData.firstPreference}
                           onChange={handleChange}
-                          className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                          className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                           required
                         >
                           <option value=''>Select Preference</option>
@@ -395,7 +395,7 @@ function App() {
                           name='secondPreference'
                           value={formData.secondPreference}
                           onChange={handleChange}
-                          className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                          className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                           required
                         >
                           <option value=''>Select Preference</option>
@@ -423,7 +423,7 @@ function App() {
                         name='competitionChoice'
                         value={formData.competitionChoice}
                         onChange={handleChange}
-                        className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                        className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                         required
                       >
                         <option value=''>Select Competition</option>
@@ -443,7 +443,7 @@ function App() {
                       name='reason'
                       value={formData.reason}
                       onChange={handleChange}
-                      className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                      className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                       rows='4'
                       placeholder='Your reason'
                       required
@@ -457,7 +457,7 @@ function App() {
                       name='comment'
                       value={formData.comment}
                       onChange={handleChange}
-                      className='px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
+                      className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
                       rows='4'
                       placeholder='Your comment or question'
                     ></textarea>
