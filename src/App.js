@@ -23,6 +23,8 @@ function App() {
   });
 
   const [errors, setErrors] = useState({});
+  const [sucsess, setSucsess] = useState("");
+
   const validateForm = (data) => {
     const validationErrors = {};
 
@@ -93,6 +95,7 @@ function App() {
       ...prevState,
       [name]: value,
     }));
+    setSucsess(false);
   };
 
   const handleSubmit = async (e) => {
@@ -128,21 +131,25 @@ function App() {
             reason: "",
             comment: "",
           });
+          setSucsess(true);
         } else {
           const result = await response.json();
           console.error("Error submitting form:", result.errors);
           setErrors({
             submission: "National ID, phone number or email is already used.",
           });
+          setSucsess(false);
         }
       } catch (error) {
         console.error("Error submitting form:", error);
         setErrors({
           submission: "National ID, phone number or email is already used..",
         });
+        setSucsess(false);
       }
     } else {
       console.log("Validation failed", validationErrors);
+      setSucsess(false);
     }
   };
 
@@ -156,23 +163,23 @@ function App() {
           <img src={years} alt='20years' className='md:w-32 w-20 ' />
         </figure>
       </div>
-      <header className='  md:w-1/2 sm:w-11/12 mx-auto border-black border-4 rounded-xl  '>
+      <header className='  md:w-1/2 w-[95%] mx-auto border-black border-4 rounded-xl  '>
         <figure className='rounded-lg'>
           <img src={bar} alt='bar ' className='rounded-lg' />
         </figure>
       </header>
       <div className='min-h-screen bg-primary  flex flex-col justify-center '>
         <div className='  sm:max-w-xl sm:mx-auto '>
-          <div className='px-4 py-10 bg-secondary mx-8 md:mx-0 shadow  sm:p-10'>
+          <div className='px-4  bg-secondary mx-8 mb-8  shadow  sm:px-10'>
             <div className='max-w-md mx-auto'>
               <div className='flex items-center space-x-5'></div>
               <form
                 onSubmit={handleSubmit}
-                className='divide-y divide-gray-200'
+                className='divide-y pb-4 divide-gray-200'
               >
-                <div className='py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7'>
+                <div className='py-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7'>
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-4'>Full Name*</label>
+                    <label className='leading-loose mb-3'>Full Name*</label>
                     <input
                       type='text'
                       name='fullName'
@@ -184,7 +191,7 @@ function App() {
                     />
                   </div>
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-4'>Email*</label>
+                    <label className='leading-loose mb-3'>Email*</label>
                     <input
                       type='email'
                       name='email'
@@ -202,7 +209,7 @@ function App() {
 
                   <div className='grid gap-4 md:grid-cols-2 grid-cols-1'>
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-4'>
+                      <label className='leading-loose mb-3'>
                         WhatsApp Number*
                       </label>
                       <input
@@ -222,7 +229,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-4'>National ID*</label>
+                      <label className='leading-loose mb-3'>National ID*</label>
                       <input
                         type='text'
                         name='nationalId'
@@ -240,7 +247,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-4'>College*</label>
+                      <label className='leading-loose mb-3'>College*</label>
                       <input
                         type='text'
                         name='college'
@@ -253,7 +260,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-4'>Major*</label>
+                      <label className='leading-loose mb-3'>Major*</label>
                       <input
                         type='text'
                         name='major'
@@ -267,7 +274,7 @@ function App() {
                   </div>
 
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-4'>
+                    <label className='leading-loose mb-3'>
                       Graduation Year*
                     </label>
                     <select
@@ -289,9 +296,9 @@ function App() {
                     <label className='leading-loose mb-2 mt-8 text-gray-800 font-semibold'>
                       Want to Participate in:
                     </label>
-                    <div className='flex gap-8 mx-auto flex-wrap w-2/3'>
+                    <div className='flex gap-8 mx-auto flex-wrap '>
                       <div className='flex-1 '>
-                        <label className=' flex flex-col '>
+                        <label className=' flex flex-col  '>
                           <input
                             type='radio'
                             name='participation'
@@ -301,7 +308,7 @@ function App() {
                             className='sr-only'
                           />
                           <div
-                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white ${
+                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white shadow-md  ${
                               formData.participation === "competition"
                                 ? " border-2 border-accent"
                                 : " "
@@ -334,7 +341,7 @@ function App() {
                             className='sr-only'
                           />
                           <div
-                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white ${
+                            className={`flex flex-col items-center justify-center p-8  rounded-lg cursor-pointer transition-colors bg-white shadow-md ${
                               formData.participation === "workshops"
                                 ? "border-2 border-accent"
                                 : ""
@@ -366,7 +373,7 @@ function App() {
                   {formData.participation === "workshops" && (
                     <>
                       <div className='flex flex-col'>
-                        <label className='leading-loose'>
+                        <label className='leading-loose mb-3'>
                           First Preference
                         </label>
                         <select
@@ -388,7 +395,7 @@ function App() {
                         </select>
                       </div>
                       <div className='flex flex-col'>
-                        <label className='leading-loose'>
+                        <label className='leading-loose mb-3'>
                           Second Preference
                         </label>
                         <select
@@ -418,7 +425,7 @@ function App() {
                   )}
                   {formData.participation === "competition" && (
                     <div className='flex flex-col'>
-                      <label className='leading-loose'>Competitions</label>
+                      <label className='leading-loose mb-3'>Competitions</label>
                       <select
                         name='competitionChoice'
                         value={formData.competitionChoice}
@@ -435,7 +442,7 @@ function App() {
                     </div>
                   )}
                   <div className='flex flex-col'>
-                    <label className='leading-loose'>
+                    <label className='leading-loose mb-3'>
                       Why do you want to Participate in this
                       Workshop/Competition?
                     </label>
@@ -444,13 +451,13 @@ function App() {
                       value={formData.reason}
                       onChange={handleChange}
                       className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
-                      rows='4'
+                      rows='2'
                       placeholder='Your reason'
                       required
                     ></textarea>
                   </div>
                   <div className='flex flex-col'>
-                    <label className='leading-loose'>
+                    <label className='leading-loose mb-3'>
                       Any Comment or Question
                     </label>
                     <textarea
@@ -458,7 +465,7 @@ function App() {
                       value={formData.comment}
                       onChange={handleChange}
                       className='px-4 py-2 border focus:ring-gray-500 font-medium focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600'
-                      rows='4'
+                      rows='2'
                       placeholder='Your comment or question'
                     ></textarea>
                   </div>
@@ -474,6 +481,11 @@ function App() {
                 {errors.submission && (
                   <p className='text-red-500 text-lg text-center'>
                     {errors.submission}
+                  </p>
+                )}
+                {sucsess && (
+                  <p className='text-green-500 text-md text-center'>
+                    form submitted successfully
                   </p>
                 )}
               </form>
