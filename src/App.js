@@ -177,9 +177,9 @@ function App() {
                 onSubmit={handleSubmit}
                 className='divide-y pb-4 divide-gray-200'
               >
-                <div className='py-6 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7'>
+                <div className='py-6 text-base  space-y-8 text-gray-700 sm:text-lg sm:leading-7'>
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-3'>Full Name*</label>
+                    <label className='leading-loose mb-2 '>Full Name*</label>
                     <input
                       type='text'
                       name='fullName'
@@ -191,7 +191,7 @@ function App() {
                     />
                   </div>
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-3'>Email*</label>
+                    <label className='leading-loose mb-2 '>Email*</label>
                     <input
                       type='email'
                       name='email'
@@ -207,9 +207,9 @@ function App() {
                   )}
                   {/* -------------------------------------------------------------------------------------------------------------- */}
 
-                  <div className='grid gap-4 md:grid-cols-2 grid-cols-1'>
+                  <div className='grid gap-4 md:grid-cols-2 grid-cols-1 md:space-y-0 space-y-8'>
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-3'>
+                      <label className='leading-loose mb-2 '>
                         WhatsApp Number*
                       </label>
                       <input
@@ -229,7 +229,9 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-3'>National ID*</label>
+                      <label className='leading-loose mb-2 '>
+                        National ID*
+                      </label>
                       <input
                         type='text'
                         name='nationalId'
@@ -247,7 +249,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-3'>College*</label>
+                      <label className='leading-loose mb-2 '>College*</label>
                       <input
                         type='text'
                         name='college'
@@ -260,7 +262,7 @@ function App() {
                     </div>
 
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-3'>Major*</label>
+                      <label className='leading-loose mb-2 '>Major*</label>
                       <input
                         type='text'
                         name='major'
@@ -274,7 +276,7 @@ function App() {
                   </div>
 
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-3'>
+                    <label className='leading-loose mb-2 '>
                       Graduation Year*
                     </label>
                     <select
@@ -373,7 +375,7 @@ function App() {
                   {formData.participation === "workshops" && (
                     <>
                       <div className='flex flex-col'>
-                        <label className='leading-loose mb-3'>
+                        <label className='leading-loose mb-2 '>
                           First Preference
                         </label>
                         <select
@@ -395,7 +397,7 @@ function App() {
                         </select>
                       </div>
                       <div className='flex flex-col'>
-                        <label className='leading-loose mb-3'>
+                        <label className='leading-loose mb-2 '>
                           Second Preference
                         </label>
                         <select
@@ -425,7 +427,9 @@ function App() {
                   )}
                   {formData.participation === "competition" && (
                     <div className='flex flex-col'>
-                      <label className='leading-loose mb-3'>Competitions</label>
+                      <label className='leading-loose mb-2 '>
+                        Competitions
+                      </label>
                       <select
                         name='competitionChoice'
                         value={formData.competitionChoice}
@@ -442,7 +446,7 @@ function App() {
                     </div>
                   )}
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-3'>
+                    <label className='leading-loose mb-2 '>
                       Why do you want to Participate in this
                       Workshop/Competition?
                     </label>
@@ -457,7 +461,7 @@ function App() {
                     ></textarea>
                   </div>
                   <div className='flex flex-col'>
-                    <label className='leading-loose mb-3'>
+                    <label className='leading-loose mb-2 '>
                       Any Comment or Question
                     </label>
                     <textarea
